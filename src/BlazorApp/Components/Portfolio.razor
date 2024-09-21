@@ -17,19 +17,23 @@
                     alt="@(hero.Alt)" />
             }
         </div>
-        <div class="container">
+        <div style="width:95%;margin-left:2.5%;margin-right:2.5%; border-radius: 10px; background-color: lightblue; padding-top:10px; padding-bottom: 10px;">
             @foreach(var stage in projectStages)
             {
-                <h3>@stage</h3>
-                @foreach (var project in projects.Where(x => x.Stage == stage))
-                {
-                    <div class="box" key="@project.Title">
-                        <a href="@project.Url" target="_blank" rel="noopener noreferrer">
-                            <h3 style="flex-basis: 40px;">@project.Title</h3>
-                        </a>
-                        <p class="small">@project.Description</p>
-                    </div>
-                }
+                <h3 style="font-weight: bolder; width:100%; text-align: center;">
+                    @stage
+                </h3>
+                <div class="container">
+                    @foreach (var project in projects.Where(x => x.Stage == stage))
+                    {
+                        <div class="box" style="border-color:hsl(195, 49%, 53%); background-color:lightgrey;" key="@project.Title">
+                            <a href="@project.Url" target="_blank" rel="noopener noreferrer">
+                                <h3 style="flex-basis: 40px;">@project.Title</h3>
+                            </a>
+                            <p class="small">@project.Description</p>
+                        </div>
+                    }
+                </div>
             }
         </div>
     }
@@ -50,6 +54,15 @@
     protected override async Task OnInitializedAsync()
     {
         projects = await Http.GetFromJsonAsync<List<Project>>("sample-data/projects.json");
+        if(projects != null)
+        {
+            await SetProjectStages();
+        }
+        hero = await HeroImageService.GetHeroAsync(img => img.Name is "portfolio");
+    }
+
+    private Task SetProjectStages()
+    {
         foreach (var project in projects)
         {
             if(!projectStages.Contains(project.Stage))
@@ -57,6 +70,6 @@
                 projectStages.Add(project.Stage);
             }
         }
-        hero = await HeroImageService.GetHeroAsync(img => img.Name is "portfolio");
+        return Task.CompletedTask;
     }
 }
