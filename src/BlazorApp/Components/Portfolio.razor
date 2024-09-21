@@ -1,7 +1,10 @@
 <section class="light" id="portfolio">
     <h2>Portfolio</h2>
+    <h3>
+        I have many project ideas that I am excited to work on yet I need to find the time to work on them. I am always coming up with new ideas and I can't wait to see what comes from them.
+    </h3>
     <div class="portfolio-container">
-    @if (projects is null)
+    @if (projects is null || projectStages is null)
     {
         <p><em>Loading...</em></p>
     }
@@ -15,14 +18,18 @@
             }
         </div>
         <div class="container">
-            @foreach (var project in projects)
+            @foreach(var stage in projectStages)
             {
-                <div class="box" key="@project.Title">
-                    <a href="@project.Url" target="_blank" rel="noopener noreferrer">
-                        <h3 style="flex-basis: 40px;">@project.Title</h3>
-                    </a>
-                    <p class="small">@project.Description</p>
-                </div>
+                <h3>@stage</h3>
+                @foreach (var project in projects.Where(x => x.Stage == stage))
+                {
+                    <div class="box" key="@project.Title">
+                        <a href="@project.Url" target="_blank" rel="noopener noreferrer">
+                            <h3 style="flex-basis: 40px;">@project.Title</h3>
+                        </a>
+                        <p class="small">@project.Description</p>
+                    </div>
+                }
             }
         </div>
     }
@@ -37,11 +44,19 @@
     public required HeroImageService HeroImageService { get; set; }
 
     private List<Project>? projects;
+    private List<string> projectStages = new List<string>();
     private HeroImage? hero;
 
     protected override async Task OnInitializedAsync()
     {
         projects = await Http.GetFromJsonAsync<List<Project>>("sample-data/projects.json");
+        foreach (var project in projects)
+        {
+            if(!projectStages.Contains(project.Stage))
+            {
+                projectStages.Add(project.Stage);
+            }
+        }
         hero = await HeroImageService.GetHeroAsync(img => img.Name is "portfolio");
     }
 }

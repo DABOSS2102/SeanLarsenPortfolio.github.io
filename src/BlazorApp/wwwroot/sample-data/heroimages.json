@@ -1,17 +1,17 @@
 [
   {
     "name": "home",
-    "src": "images/woman-with-tablet.jpg",
-    "alt": "woman with glasses holding a tablet"
+    "src": "images/TechBanner.jpg",
+    "alt": "city skyline with technology overlay"
   },
   {
     "name": "about",
-    "src": "images/motion-background.jpg",
-    "alt": "gray abstract background"
+    "src": "images/GeometricBackground.jpg",
+    "alt": "geometric abstract shapes background"
   },
   {
     "name": "portfolio",
-    "src": "images/design-desk.jpeg",
-    "alt": "desktop with books and laptop"
+    "src": "images/Code.jpg",
+    "alt": "code on a computer screen"
   }
 ]

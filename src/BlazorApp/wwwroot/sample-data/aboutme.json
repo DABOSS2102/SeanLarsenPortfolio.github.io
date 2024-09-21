@@ -1,12 +1,16 @@
 {
-  "description": "I'm a UI/UX student studying at Barnett Technical University. I enjoy creating unique and simplistic user interfaces in creative ways.",
+  "description": "I am currently an Associate Application Developer at Sand Castle Field Services. I enjoy working on projects from start to finish as a full-stack developer.",
   "skills": [
-    "Web design",
-    "User experience",
-    "Inclusive design",
-    "Focus group testing",
-    "Mobile user interfaces",
-    "Graphic design"
+    "Web Development",
+    "Blazor",
+    "App Development",
+    "Maui",
+    ".NET",
+    "VB",
+    "C#",
+    "SQL",
+    "HTML",
+    "CSS"
   ],
-  "detailOrQuote": "I am passionate about solving problems in new creative ways to drive innovation. By leveraging my UI/UX experience I continually look for new and better ways to make tech accessible by all."
+  "detailOrQuote": "My main goal when creating a product is to make sure it is user-friendly and efficient. On top of that I always do my best to make sure the product is visually appealing."
 }
