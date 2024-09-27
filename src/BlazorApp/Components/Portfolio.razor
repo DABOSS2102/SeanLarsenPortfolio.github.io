@@ -4,39 +4,64 @@
         I have many project ideas that I am excited to work on yet I need to find the time to work on them. I am always coming up with new ideas and I can't wait to see what comes from them.
     </h3>
     <div class="portfolio-container">
-    @if (projects is null || projectStages is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else
-    {
-        <div class="portfolio-hero">
-            @if (hero is not null)
-            {
-                <img src="@(hero.Src)" style="height: 90%; width: 100%; object-fit: cover;" 
-                    alt="@(hero.Alt)" />
-            }
-        </div>
-        <div style="width:95%;margin-left:2.5%;margin-right:2.5%; border-radius: 10px; background-color: lightblue; padding-top:10px; padding-bottom: 10px;">
-            @foreach(var stage in projectStages)
-            {
-                <h3 style="font-weight: bolder; width:100%; text-align: center;">
-                    @stage
-                </h3>
-                <div class="container">
-                    @foreach (var project in projects.Where(x => x.Stage == stage))
-                    {
-                        <div class="box" style="border-color:hsl(195, 49%, 53%); background-color:lightgrey;" key="@project.Title">
-                            <a href="@project.Url" target="_blank" rel="noopener noreferrer">
-                                <h3 style="flex-basis: 40px;">@project.Title</h3>
-                            </a>
-                            <p class="small">@project.Description</p>
-                        </div>
-                    }
-                </div>
-            }
-        </div>
-    }
+        @if (projects is null || projectStages is null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div class="portfolio-hero">
+                @if (hero is not null)
+                {
+                    <img src="@(hero.Src)" style="height: 90%; width: 100%; object-fit: cover;" 
+                        alt="@(hero.Alt)" />
+                }
+            </div>
+            <div style="width:95%;margin-left:2.5%;margin-right:2.5%; border-radius: 10px; background-color: lightblue; padding-top:10px; padding-bottom: 10px;">
+                @foreach(var stage in projectStages)
+                {
+                    <h3 style="font-weight: bolder; width:100%; text-align: center;">
+                        @stage
+                    </h3>
+                    <div class="container">
+                            @foreach (var project in projects.Where(x => x.Stage == stage).OrderBy(x => string.IsNullOrWhiteSpace(x.Completed) ? x.Title : x.Completed))
+                        {
+                            <div class="box" style="border-color:hsl(195, 49%, 53%); background-color:lightgrey;" key="@project.Title">
+                                <a href="@project.Url" target="_blank" rel="noopener noreferrer">
+                                    <h3 style="flex-basis: 40px;" class="fw-bolder">@project.Title</h3>
+                                </a>
+                                @if (!string.IsNullOrWhiteSpace(project.Completed))
+                                {
+                                        <p class="small">
+                                            <span class="fw-bold">
+                                                Completed:
+                                            </span> 
+                                        @project.Completed</p>
+                                }
+                                <p class="small">
+                                    <span class="fw-bold">
+                                        My Role:
+                                    </span>
+                                    @project.Role
+                                </p>
+                                <p class="small">
+                                    <span class="fw-bold">
+                                        Languages Used:
+                                    </span>
+                                    @project.Languages
+                                </p>
+                                <p class="small">
+                                    <span class="fw-bold">
+                                        Description:
+                                    </span>
+                                    @project.Description
+                                </p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
     </div>
 </section>
 

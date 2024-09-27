@@ -1,8 +1,39 @@
 [
+
+  {
+    "stage": "Completed",
+    "title": "Track and Field Throw Distance Laser Measuring Device",
+    "description": "The code and circuit diagram used to create a laser measuring device designed to measure distances thrown in a Track and Field throwing event.",
+    "url": "https://github.com/DABOSS2102/Throws-Laser-Distance-Measuring-Embedded-System",
+    "languages": "C++",
+    "role": "Sole Developer, Designer, and Builder",
+    "completed": "05/13/2024"
+  },
+  {
+    "stage": "Completed",
+    "title": "Track and Field Throw Manager",
+    "description": "A program to manage data regarding the Throwing events for Track and Field. The program includes a UI to allow data to be more easily managed. Made with the Qt Creator IDE.",
+    "url": "https://github.com/DABOSS2102/Track-and-Field-Throws-Manager",
+    "languages": "C++ and C",
+    "role": "Sole Developer",
+    "completed": "12/06/2023"
+  },
   {
     "stage": "In Progress",
     "title": "NuGet Package Manager / Visualizer",
     "description": "Currently in development. This project will allow users to view the packages they have installed in their projects as a diagram and will allow them to see vulnerabilities or deprications of packages in use. Project link not yet available.",
-    "url": "https://github.com/DABOSS2102"
+    "url": "",
+    "languages": "C#,HTML,CSS",
+    "role": "Sole Developer",
+    "completed": ""
+  },
+  {
+    "stage": "In Progress",
+    "title": "Slipshod",
+    "description": "It's a 2D auto scrolling narrative game that is currently in development. Link not yet allowed to the public.",
+    "url": "",
+    "languages": "C#",
+    "role": "Game Developer (Team Member) (Macro System Designer)",
+    "completed": ""
   }
 ]
