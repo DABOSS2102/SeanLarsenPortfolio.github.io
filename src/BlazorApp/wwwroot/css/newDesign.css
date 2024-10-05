@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&display=swap");
+
+#main,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    max-width: 100%;
+    font-family: "Montserrat", sans-serif;
+}
+.customSection {
+    position: relative;
+    color: black;
+    background: rgba(255, 255, 255, 0.35);
+    padding: 8rem 0;
+    max-width: 100%;
+    margin:0px;
+}
+
+.background {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    z-index: -1;
+}
+
+.card {
+    margin: auto;
+    background: #FFFFFFE6;
+    width: 90%;
+}
+.card-header {
+    text-align: center;
+}
+.card-body {
+    width: 90%;
+    margin: auto;
+}
+
+.customLabel{
+    font-weight:bold;
+    width:100%;
+}
+.customData{
+    width:100%;
+}
+.hover {
+    cursor: pointer;
+}
+
+#home {
+    max-width: 100%;
+    height: 100vh;
+    width: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-content: center;
+}
+    #home .card {
+        margin: auto;
+        background: #FFFFFFE6;
+        width: fit-content !important;
+        padding: 10px 20px;
+        border: solid 2px;
+        border-color: #868686;
+    }
+    #home .card-body {
+        width: fit-content;
+        text-align: center;
+    }
+    #home h1 {
+        margin: auto;
+    }
+
+#home #next{
+    padding:0px;
+    color:black;
+    position: absolute; 
+    bottom:2rem; 
+    left:50%; 
+    transform: translate(-50%, 0);
+}
+
+#about {
+    max-width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+    
+#skillsContainer {
+    margin: 1rem auto;
+    padding:0.5rem;
+    width: 90%;
+    background-color: #c3c3c3;
+    border-radius: 2rem;
+    border:solid 2px #7d7d7d;
+    text-align: center;
+}
+
+#portfolio {
+    max-width: 100%;
+    padding: 2rem;
+    background: linear-gradient(90deg, #272264, #244683, #0f75bc, #28407c, rgba(38,33,99,1))
+}
+
+    #portfolioImageContainer{
+        width:100%;
+        height:100%;
+        align-content:center;
+    }
+
+    #portfolioImageContainer img {
+        width: 100%;
+        height: auto;
+    }
+
+#portfolio .card {
+    width: 95%;
+}
+
+.stageCard .card-header {
+    position: relative;
+}
+.expandButton {
+    background-color: black; 
+    width:2rem;
+    color: white; 
+    cursor: pointer; 
+    padding: 1rem 2rem; 
+    position: absolute; 
+    right: 2rem; 
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+img.social-icon {
+    width: 30px;
+    height: 30px;
+}

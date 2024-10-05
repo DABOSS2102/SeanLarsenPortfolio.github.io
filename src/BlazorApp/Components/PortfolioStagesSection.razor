@@ -1,0 +1,83 @@
+<div class="w-100 h-100 mb-1">
+    @if (loading)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else if(!hasData)
+    {
+        <p><em>No Data Found...</em></p>
+    }
+    else
+    {
+        <div class="card stageCard">
+            <div class="card-header">
+                <h3>@stageName</h3>
+                @if(projects.Count() > 2)
+                {
+                    <div class="expandButton" @onclick="Expand">
+                        @if (showMore)
+                        {
+                            <span>-</span>
+                        }
+                        else
+                        {
+                            <span>+</span>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @for(int i = 0; i < (projects.Count()<=2?projects.Count() : 2); i++)
+                    {
+                        <div class="col-12 col-md-6">
+                            <ProjectCard thisProject="@projects[i]" />
+                        </div>
+                    }
+                    @if (showMore && projects.Count() > 2)
+                    {
+                        <p>test</p>
+                        @for (int i = 2; i < projects.Count(); i++)
+                        {
+                            <div class="col-12 col-md-6">
+                                <ProjectCard thisProject="@projects[i]" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public required List<Project> projects { get; set; }
+
+    bool loading = true;
+    bool hasData = true;
+    bool showMore = false;
+
+    private string stageName = "";
+
+    protected override Task OnInitializedAsync()
+    {
+        if(projects == null)
+        {
+            hasData = false;
+            loading = false;
+            return Task.CompletedTask;
+        }
+
+        stageName = projects[0].Stage;
+
+        loading = false;
+        return Task.CompletedTask;
+    }
+
+    private void Expand()
+    {
+        showMore = !showMore;
+        StateHasChanged();
+    }
+}

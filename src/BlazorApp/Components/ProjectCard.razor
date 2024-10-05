@@ -1,0 +1,67 @@
+@inject IJSRuntime JSRuntime;
+
+<div class="card h-100 w-100 hover mb-1" @onclick="() => nav(thisProject.Url)">
+    <div class="card-header">
+        <a href="@thisProject.Url" target="_blank">
+            <h4>@thisProject.Title</h4>
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            @if (!string.IsNullOrWhiteSpace(thisProject.Completed))
+            {
+                <div class="col-12">
+                    <p class="customLabel">
+                        Completed:
+                    </p>
+                </div>
+                <div class="col-12">
+                    <p class="customData">
+                        @thisProject.Completed
+                    </p>
+                </div>
+
+            }
+            <div class="col-12">
+                <p class="customLabel">
+                    My Role:
+                </p>
+            </div>
+            <div class="col-12">
+                <p class="customData">
+                    @thisProject.Role
+                </p>
+            </div>
+            <div class="col-12">
+                <p class="customLabel">
+                    Languages Used:
+                </p>
+            </div>
+            <div class="col-12">
+                <p class="customData">
+                    @thisProject.Languages
+                </p>
+            </div>
+            <div class="col-12">
+                <p class="customLabel">
+                    Description:
+                </p>
+            </div>
+            <div class="col-12">
+                <p class="customData">
+                    @thisProject.Description
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required Project thisProject { get; set; }
+
+    private async Task nav(string url)
+    {
+        await JSRuntime.InvokeAsync<object>("open", url, "_blank");
+    }
+}
