@@ -1,10 +1,17 @@
 @inject IJSRuntime JSRuntime;
 
-<div class="card h-100 w-100 hover mb-1" @onclick="() => nav(thisProject.Url)">
+<div class="card h-100 w-100 mb-1 @(string.IsNullOrWhiteSpace(thisProject.Url) ? "" : "hover")" @onclick="() => nav(thisProject.Url)">
     <div class="card-header">
-        <a href="@thisProject.Url" target="_blank">
+        @if (!string.IsNullOrWhiteSpace(thisProject.Url))
+        {
+            <a href="@thisProject.Url" target="_blank">
+                <h4>@thisProject.Title</h4>
+            </a>
+        }
+        else
+        {
             <h4>@thisProject.Title</h4>
-        </a>
+        }
     </div>
     <div class="card-body">
         <div class="row">
@@ -62,6 +69,9 @@
 
     private async Task nav(string url)
     {
-        await JSRuntime.InvokeAsync<object>("open", url, "_blank");
+        if (!string.IsNullOrWhiteSpace(url))
+        {
+            await JSRuntime.InvokeVoidAsync("openInNewTab", url);
+        }
     }
 }
