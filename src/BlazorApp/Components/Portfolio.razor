@@ -1,67 +1,38 @@
-<section class="light" id="portfolio">
-    <h2>Portfolio</h2>
-    <h3>
-        I have many project ideas that I am excited to work on yet I need to find the time to work on them. I am always coming up with new ideas and I can't wait to see what comes from them.
-    </h3>
-    <div class="portfolio-container">
-        @if (projects is null || projectStages is null)
-        {
-            <p><em>Loading...</em></p>
-        }
-        else
-        {
-            <div class="portfolio-hero">
-                @if (hero is not null)
-                {
-                    <img src="@(hero.Src)" style="height: 90%; width: 100%; object-fit: cover;" 
-                        alt="@(hero.Alt)" />
-                }
-            </div>
-            <div style="width:95%;margin-left:2.5%;margin-right:2.5%; border-radius: 10px; background-color: lightblue; padding-top:10px; padding-bottom: 10px;">
-                @foreach(var stage in projectStages)
-                {
-                    <h3 style="font-weight: bolder; width:100%; text-align: center;">
-                        @stage
-                    </h3>
-                    <div class="container">
-                            @foreach (var project in projects.Where(x => x.Stage == stage).OrderBy(x => string.IsNullOrWhiteSpace(x.Completed) ? x.Title : x.Completed))
-                        {
-                            <div class="box" style="border-color:hsl(195, 49%, 53%); background-color:lightgrey;" key="@project.Title">
-                                <a href="@project.Url" target="_blank" rel="noopener noreferrer">
-                                    <h3 style="flex-basis: 40px;" class="fw-bolder">@project.Title</h3>
-                                </a>
-                                @if (!string.IsNullOrWhiteSpace(project.Completed))
-                                {
-                                        <p class="small">
-                                            <span class="fw-bold">
-                                                Completed:
-                                            </span> 
-                                        @project.Completed</p>
-                                }
-                                <p class="small">
-                                    <span class="fw-bold">
-                                        My Role:
-                                    </span>
-                                    @project.Role
-                                </p>
-                                <p class="small">
-                                    <span class="fw-bold">
-                                        Languages Used:
-                                    </span>
-                                    @project.Languages
-                                </p>
-                                <p class="small">
-                                    <span class="fw-bold">
-                                        Description:
-                                    </span>
-                                    @project.Description
-                                </p>
+@inject ProjectService ProjectService
+
+<section class="customSection" id="portfolio">
+    <div class="card">
+        <div class="card-header">
+            <h2>Portfolio</h2>
+        </div>
+        <div class="card-body">
+            <p>
+                I have many project ideas that I'm equally excited to work on yet I need to find the time to work on them. I am always coming up with new ideas and I can't wait to see what comes from them.
+            </p>
+            @if (loading || !foundProjects)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <div class="row">
+                    @if (hero != null)
+                    {
+                        <div class="d-none col">
+                            <div id="portfolioImageContainer">
+                                <img src="@(hero.Src)" alt="@(hero.Alt)" />
                             </div>
-                        }
-                    </div>
-                }
-            </div>
-        }
+                        </div>
+                    }
+                    @foreach (var stage in projects)
+                    {
+                        <div class="col-12">
+                            <PortfolioStagesSection projects="@stage.Value" />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
     </div>
 </section>
 
@@ -72,27 +43,47 @@
     [Parameter, EditorRequired]
     public required HeroImageService HeroImageService { get; set; }
 
-    private List<Project>? projects;
-    private List<string> projectStages = new List<string>();
     private HeroImage? hero;
+    bool loading = true, foundProjects = false;
+    private Dictionary<string, List<Project>> projects = new Dictionary<string, List<Project>>();
 
     protected override async Task OnInitializedAsync()
     {
-        projects = await Http.GetFromJsonAsync<List<Project>>("sample-data/projects.json");
-        if(projects != null)
+        loading = true;
+        try
         {
-            await SetProjectStages();
+            var allProjects = await ProjectService.GetProjectsFromCsv("sample-data/projects.csv");
+            if (allProjects != null)
+            {
+                await SetProjectStages(allProjects);
+            }
+            hero = await HeroImageService.GetHeroAsync(img => img.Name == "portfolio");
         }
-        hero = await HeroImageService.GetHeroAsync(img => img.Name is "portfolio");
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error loading projects: {ex.Message}");
+        }
+        finally
+        {
+            loading = false;
+        }
     }
 
-    private Task SetProjectStages()
+    private Task SetProjectStages(List<Project> allProjects)
     {
-        foreach (var project in projects)
+        if (allProjects != null)
         {
-            if(!projectStages.Contains(project.Stage))
+            if (allProjects.Count > 0)
             {
-                projectStages.Add(project.Stage);
+                foundProjects = true;
+            }
+            foreach (var project in allProjects)
+            {
+                if (!projects.ContainsKey(project.Stage))
+                {
+                    projects.Add(project.Stage, new List<Project>());
+                }
+                projects[project.Stage].Add(project);
             }
         }
         return Task.CompletedTask;
